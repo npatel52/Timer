@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Timer v1.0 </title>
+</head>
+
+<body>
+	<script type = "text/javascript">
+
+		function Timer(h, m, s){
+			this.h = h;
+			this.m = m;
+			this.s = s;
+			
+			this.getHours = function(){
+				return this.h;
+			};
+		
+
+			this.getMinutes = function(){
+				return this.m;
+			};
+
+
+			this.getSeconds = function(){
+				return this.s;
+			};
+
+			this.setSeconds = function(){
+
+				if(this.s == 0)
+					this.s = 59;
+				else
+					this.s -= 1;
+			};
+		
+			this.setMinutes = function(){
+				
+				if( this.h != 0 || this.m != 0){
+					if(this.m == 0)
+						this.m = 59;
+					else
+						this.m -= 1;
+				}	
+			};
+			
+			this.setHours = function(){
+				if(this.h != 0)
+					this.h -= 1;
+			};
+
+			this.updateTime = function(){
+				// Update seconds, then minutes, and then hours
+				if(this.minutes != 0 || this.h != 0 || this.s != 0){
+					// Seconds are always updated except when minutes, seconds, and hour are all zero
+					this.setSeconds();
+				
+					// minutes are update is timer has 59 seconds
+					if(this.s == 59){
+						this.setMinutes();
+					}	
+				
+					// hour is update when minutes = 59
+					if( this.m == 59){
+						this.setHours();
+					}
+				}		
+			};		
+		}
+		
+		var time = new Timer(2,0,0);
+
+		function printTime(){
+			h = time.getHours();
+			m = time.getMinutes();
+			s = time.getSeconds();
+			document.body.innerHTML = h + ":" + m + ":" + s;
+			time.updateTime();
+		}
+
+		setInterval(printTime,1000);
+
+		
+	</script>
+</body>
+</html>
