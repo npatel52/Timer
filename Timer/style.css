@@ -1,0 +1,38 @@
+header{
+  display: block;
+  background-color: #f0f5f5;
+  height: 150px;
+  font-family: "Courier New";
+  font-size: 50px;
+  align-items: center;
+}
+
+input[type=text] {
+  width: 40px;
+  height: 50px;
+  font-size: 35px;
+  padding: 10px 10px 10px 10px;
+  margin: 8px 0;
+  border: 2px solid black;
+  border-radius: 9px;
+}
+
+button{
+  width: 15%;
+  height:10%;
+  font-family: "Courier New";
+  font-size:40px;
+  padding: 5px 5px 5px 5px;
+  margin: 8px 0;
+  background-color: #4db8ff;
+  color: white;
+  border-radius: 9px;
+  cursor:pointer;
+}
+
+
+body{
+  font-family: "Courier New";
+  font-size:70px;
+  text-align: center;
+}
