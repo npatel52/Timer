@@ -1,86 +1,96 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title> Timer v1.0 </title>
+	<title> Timer Beta </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<style>
+		header{
+			display: block;
+			background-color: #f0f5f5;
+			height: 150px;
+		}
+	</style>
 </head>
 
 <body>
-	<script type = "text/javascript">
 
-		function Timer(h, m, s){
-			this.h = h;
-			this.m = m;
-			this.s = s;
-			
-			this.getHours = function(){
-				return this.h;
-			};
-		
+		<!-- header for user input -->
+		<header>
+			<div id = "input">
+					<form = "time_form">
+						H:
+						<input id = "hour" type = "text">
+						M:
+						<input id = "minutes" type = "text">
+						S:
+						<input id = "seconds" type = "text">
+						<button type = "button" onclick="start()"> Start </button>
+				</form>
+			</div>
 
-			this.getMinutes = function(){
-				return this.m;
-			};
+
+		</header>
+
+		<!-- Timer display -->
+		<div id = "time_display">
+			<h1 id = "time"> Time </h1>
+			<script  id = "timer" src = "timer.js" type = "text/javascript" h = "2" m = "20" s = "30"> </script>
+		</div>
+
+		<!-- Validates form data -->
+		<script>
+			var hour = document.getElementById("hour").value;
+			function start(){
+
+			}
+
+			function isPositive(){
+
+			}
+
+			function isValid(){
+
+			}
+
+		</script>
+
+		<script>
+		$(document).ready(function () {
+					$("#hour").forceNumeric();
+			});
 
 
-			this.getSeconds = function(){
-				return this.s;
-			};
+			// forceNumeric() plug-in implementation
+		jQuery.fn.forceNumeric = function () {
 
-			this.setSeconds = function(){
+					return this.each(function () {
+							$(this).keydown(function (e) {
+									var key = e.which || e.keyCode;
 
-				if(this.s == 0)
-					this.s = 59;
-				else
-					this.s -= 1;
-			};
-		
-			this.setMinutes = function(){
-				
-				if( this.h != 0 || this.m != 0){
-					if(this.m == 0)
-						this.m = 59;
-					else
-						this.m -= 1;
-				}	
-			};
-			
-			this.setHours = function(){
-				if(this.h != 0)
-					this.h -= 1;
-			};
+									if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+									// numbers
+											key >= 48 && key <= 57 ||
+									// Numeric keypad
+											key >= 96 && key <= 105 ||
+									// comma, period and minus, . on keypad
+										 key == 190 || key == 188 || key == 109 || key == 110 ||
+									// Backspace and Tab and Enter
+										 key == 8 || key == 9 || key == 13 ||
+									// Home and End
+										 key == 35 || key == 36 ||
+									// left and right arrows
+										 key == 37 || key == 39 ||
+									// Del and Ins
+										 key == 46 || key == 45)
+											return true;
 
-			this.updateTime = function(){
-				// Update seconds, then minutes, and then hours
-				if(this.minutes != 0 || this.h != 0 || this.s != 0){
-					// Seconds are always updated except when minutes, seconds, and hour are all zero
-					this.setSeconds();
-				
-					// minutes are update is timer has 59 seconds
-					if(this.s == 59){
-						this.setMinutes();
-					}	
-				
-					// hour is update when minutes = 59
-					if( this.m == 59){
-						this.setHours();
-					}
-				}		
-			};		
-		}
-		
-		var time = new Timer(2,0,0);
+									return false;
+							});
+					});
+				}
 
-		function printTime(){
-			h = time.getHours();
-			m = time.getMinutes();
-			s = time.getSeconds();
-			document.body.innerHTML = h + ":" + m + ":" + s;
-			time.updateTime();
-		}
+		</script>
 
-		setInterval(printTime,1000);
-
-		
-	</script>
 </body>
 </html>
