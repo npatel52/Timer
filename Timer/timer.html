@@ -4,13 +4,11 @@
 <head>
 	<title> Timer Beta </title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<style>
-		header{
-			display: block;
-			background-color: #f0f5f5;
-			height: 150px;
-		}
-	</style>
+	<!--<script  id = "timer" src = "timer.js" type = "text/javascript"
+					hours = document.getElementById("hours").value
+					minutes = document.getElementById("minutes").value
+					seconds = document.getElementById("secods").value> </script>-->
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -18,14 +16,15 @@
 		<!-- header for user input -->
 		<header>
 			<div id = "input">
-					<form = "time_form">
+					<form id = "time_form">
 						H:
-						<input id = "hour" type = "text">
+						<input id = "hours" type = "text" maxlength = "2">
 						M:
-						<input id = "minutes" type = "text">
+						<input id = "minutes" type = "text" maxlength = "2">
 						S:
-						<input id = "seconds" type = "text">
-						<button type = "button" onclick="start()"> Start </button>
+						<input id = "seconds" type = "text" maxlength = "2">
+
+						<button id = "start_button" type = "button"> Start </button>
 				</form>
 			</div>
 
@@ -35,61 +34,72 @@
 		<!-- Timer display -->
 		<div id = "time_display">
 			<h1 id = "time"> Time </h1>
-			<script  id = "timer" src = "timer.js" type = "text/javascript" h = "2" m = "20" s = "30"> </script>
+
 		</div>
 
 		<!-- Validates form data -->
+
+		<!--for the puspose of valid data from user-->
 		<script>
-			var hour = document.getElementById("hour").value;
-			function start(){
+		// To keep track of first key entered for minutes and seconds
+		var firstKey = undefined;
 
-			}
+		// ready() ensures that html document is loaded first before running the jQuery code
+			$(document).ready(function (){
+					$("#hours").forcePositiveIntegers();
+					$("#minutes").forceRange();
+					$("#seconds").forceRange();
 
-			function isPositive(){
-
-			}
-
-			function isValid(){
-
-			}
-
-		</script>
-
-		<script>
-		$(document).ready(function () {
-					$("#hour").forceNumeric();
-			});
+					// To reset values of firstKey
+					$("#minutes").focus(function(){
+						firstKey = undefined;
+					});
+					$("#seconds").focus(function(){
+						firstKey = undefined;
+					});
 
 
-			// forceNumeric() plug-in implementation
-		jQuery.fn.forceNumeric = function () {
+				/*	$("#start_button").click(function(){
+							$.getScript("timer.js",function(){
+								var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("hours")),
+								 													parseInt(document.getElementById("timer").getAttribute("minutes")),
+																						parseInt(document.getElementById("timer").getAttribute("seconds")));
 
-					return this.each(function () {
-							$(this).keydown(function (e) {
-									var key = e.which || e.keyCode;
+							});
+						});*/
+				});
 
-									if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-									// numbers
-											key >= 48 && key <= 57 ||
-									// Numeric keypad
-											key >= 96 && key <= 105 ||
-									// comma, period and minus, . on keypad
-										 key == 190 || key == 188 || key == 109 || key == 110 ||
-									// Backspace and Tab and Enter
-										 key == 8 || key == 9 || key == 13 ||
-									// Home and End
-										 key == 35 || key == 36 ||
-									// left and right arrows
-										 key == 37 || key == 39 ||
-									// Del and Ins
-										 key == 46 || key == 45)
+
+		jQuery.fn.forcePositiveIntegers = function () {
+						$(this).keypress(function (event) {
+							// charCode doesn't always work
+								var key = event.which || event.keyCode;
+								// Only allows certain keypress, numbers, left and right arrow, tabs, delete, backspace, and tabs
+								// need to insert key >= 97 && key <= 105 for PC. Laptops don't have numpads!
+									if (key >= 48 && key <= 57 || key == 37 || key == 39 ||	key == 46 || key == 8 || key == 9)
 											return true;
 
 									return false;
-							});
 					});
-				}
+			}
 
+			// Ensures range of minutes and seconds to be in [0,59]
+			jQuery.fn.forceRange = function () {
+							$(this).keypress(function (event) {
+								var key = event.which || event.keyCode;
+								// always allow backspace and tab
+								if(key == 8 || key == 9){
+									firstKey = key;
+									return true;
+								}else if(firstKey >= 54 && firstKey <= 57){ // key 6,7,8,9 can't have digit following it due to min & sec format
+									return false;
+								}else if(key >= 48 && key <= 57){
+										firstKey = key;
+										return true;
+								}
+								return false;
+							});
+					}
 		</script>
 
 </body>
