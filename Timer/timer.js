@@ -1,8 +1,13 @@
 const INTERVAL = 1000;
-var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("h")),
- 													parseInt(document.getElementById("timer").getAttribute("m")),
-														parseInt(document.getElementById("timer").getAttribute("s")));
-setInterval(printTime,INTERVAL);
+/*
+var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("hours")),
+ 													parseInt(document.getElementById("timer").getAttribute("minutes")),
+														parseInt(document.getElementById("timer").getAttribute("seconds")));
+														*/
+/*
+if(Timer.h !== 0 || Timer.m !== 0 || Timer.s !== 0 )
+	setInterval(printTime,INTERVAL);
+	*/
 
 function Timer(hours, minutes, seconds){
 		h = hours;
@@ -70,6 +75,7 @@ function Timer(hours, minutes, seconds){
 			this.updateTime();
 		};
 
+		setInterval(printTime,INTERVAL);
 	}
 
 	/*var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("h")),
