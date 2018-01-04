@@ -2,10 +2,13 @@
 var firstKey = undefined;
 // 1 second
 const INTERVAL = 1000;
-var interval_var = undefined;
+var intervalVar = undefined;
+var inputChange = false;
+var buttonHandler = true; // intially button in start mode
 
 // ready() ensures that html document is loaded first before running the jQuery code
 $(document).ready(function (){
+
       $("#hours").forcePositiveIntegers();
       $("#minutes").forceRange();
       $("#seconds").forceRange();
@@ -19,33 +22,47 @@ $(document).ready(function (){
         firstKey = undefined;
       });
 
+
+      $("#hours").isValueChanged();
+      $("#minutes").isValueChanged();
+      $("#seconds").isValueChanged();
+
+
       $("#start_stop_button").click(function(){
           // To swap text of button start <--> stop
         var el = $(this);
 
-        if(el.text() == el.data("text-original")){
-            el.text(el.data("text-swap"));
-            startTime();
-        }else{ // it must be stop
-            stopTime();
-            el.text(el.data("text-original"));
+        if(buttonHandler){
+          el.text(el.data("text-swap")); // change text to stop
+          buttonHandler = false;
+          startTime();
+        }else{ // it must be stop button
+          el.text(el.data("text-original")); // change text to start
+          buttonHandler = true;
+          stopTime();
          }
-
         });
-
   });
 
   startTime = function(){
     // if text input has been changed since last called then intialize new Timer
-
-    // otherwise continue with old time
-    Timer(parseInt(document.getElementById("hours").value), parseInt(document.getElementById("minutes").value),parseInt(document.getElementById("seconds").value) );
-    interval_var = setInterval(printTime, INTERVAL);
+    if(inputChange){
+      Timer(parseInt(document.getElementById("hours").value), parseInt(document.getElementById("minutes").value),parseInt(document.getElementById("seconds").value) );
+      inputChange = false; // for monitoring next change in input field
+    }
+     // otherwise continue with old time
+      intervalVar = setInterval(printTime, INTERVAL);
   };
 
   stopTime = function(){
-    clearInterval(interval_var);
+    clearInterval(intervalVar);
   }
+
+jQuery.fn.isValueChanged = function(){
+  $(this).change(function(){
+    inputChange = true;
+  });
+}
 
 jQuery.fn.forcePositiveIntegers = function () {
         $(this).keypress(function (event) {
@@ -77,17 +94,3 @@ jQuery.fn.forcePositiveIntegers = function () {
             return false;
           });
   }
-
-/*
-      $("form input:text").change(function(){
-            $("time_display").append("change");
-            var flag = false;
-            $("form input:text").each(function(){
-              if(!$(this).val()){
-                // text field has no value
-                falg = true;
-              }
-            });
-            flag ? $("#play").prop("disabled",true) : $("#play").prop("disabled",false);
-      });
-      */
