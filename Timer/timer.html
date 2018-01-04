@@ -7,29 +7,33 @@
 	<script src = "timer.js"></script>
 	<!--for valid data from user-->
 	<script src = "handler.js"></script>
+	<script src = "dt.js"> </script>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<audio id = "audio" src = "time_end.wav" type = "audio/wav" preload="auto" hidden = "true" controls = "controls"></audio>
 </head>
 
 <body>
 		<!-- header for user input -->
-		<header>
-			<div id = "input">
+		<div>
+
+		<header id = "header">
+			<div id>
 					<form id = "time_form">
 						H:
-						<input id = "hours" type = "text" maxlength = "2">
+						<input id = "hours" type = "text" maxlength = "2" value = "00">
 						M:
-						<input id = "minutes" type = "text" maxlength = "2">
+						<input id = "minutes" type = "text" maxlength = "2" value = "00">
 						S:
-						<input id = "seconds" type = "text" maxlength = "2">
+						<input id = "seconds" type = "text" maxlength = "2" value = "00">
 						<!-- type button is important! to avoid reloading page -->
-						<button id = "start_stop_button" type = "button" data-text-original = "start" data-text-swap = "stop"> start </button>
-				</form>
-			</div>
+						<button id = "start_stop_button" type = "button" data-text-original = "start" data-text-swap = "stop" > start </button>
+			</form>
+		</div>
+		<h3 id = "date_and_time"> </h3>
 		</header>
 
 		<!-- Timer display -->
-		<div>
-			<h1 id = "time_display"> 00:00:00 </h1>
-		</div>
+		<p id = "time_display"> 00:00:00 </p>
+	</div>
 </body>
 </html>
