@@ -1,35 +1,32 @@
-const INTERVAL = 1000;
-/*
-var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("hours")),
- 													parseInt(document.getElementById("timer").getAttribute("minutes")),
-														parseInt(document.getElementById("timer").getAttribute("seconds")));
-														*/
-/*
-if(Timer.h !== 0 || Timer.m !== 0 || Timer.s !== 0 )
-	setInterval(printTime,INTERVAL);
-	*/
-
 function Timer(hours, minutes, seconds){
-		h = hours;
-		m = minutes;
-		s = seconds;
 
+		// Checking for NaN
+		h = (hours !== hours)? 0 : hours;
+		m = (minutes !== minutes)? 0 : minutes;
+		s = (seconds !== seconds)? 0 : seconds;
+		
 		getHours = function(){
+			if(this.h < 10)
+				return "0" + this.h;
+
 			return this.h;
 		};
 
 
 		getMinutes = function(){
+			if(this.m < 10)
+				return "0" + this.m;
 			return this.m;
 		};
 
 
 		getSeconds = function(){
+			if(this.s < 10)
+				return "0" + this.s;
 			return this.s;
 		};
 
 		setSeconds = function(){
-
 			if(this.s === 0)
 				this.s = 59;
 			else
@@ -37,7 +34,6 @@ function Timer(hours, minutes, seconds){
 		};
 
 		setMinutes = function(){
-
 			if( this.h !== 0 || this.m !== 0){
 				if(this.m === 0)
 					this.m = 59;
@@ -53,7 +49,7 @@ function Timer(hours, minutes, seconds){
 
 		updateTime = function(){
 			// Update seconds, then minutes, and then hours
-			if(this.minutes !== 0 || this.h !== 0 || this.s !== 0){
+			if(this.s !== 0 || this.m !== 0 || this.h !== 0){
 				// Seconds are always updated except when minutes, seconds, and hour are all zero
 				this.setSeconds();
 
@@ -66,19 +62,12 @@ function Timer(hours, minutes, seconds){
 				if(this.m == 59 & this.s == 59){
 					this.setHours();
 				}
-
 			}
+
 		};
 
 		printTime = function(){
-			document.getElementById("time").innerHTML = this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+			document.getElementById("time_display").innerHTML = this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
 			this.updateTime();
 		};
-
-		setInterval(printTime,INTERVAL);
-	}
-
-	/*var timeSpan = new Timer(parseInt(document.getElementById("timer").getAttribute("h")),
-														parseInt(document.getElementById("timer").getAttribute("m")),
-															parseInt(document.getElementById("timer").getAttribute("s"));
-															*/
+}
