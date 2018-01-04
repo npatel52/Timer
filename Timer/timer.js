@@ -4,7 +4,7 @@ function Timer(hours, minutes, seconds){
 		h = (hours !== hours)? 0 : hours;
 		m = (minutes !== minutes)? 0 : minutes;
 		s = (seconds !== seconds)? 0 : seconds;
-		
+
 		getHours = function(){
 			if(this.h < 10)
 				return "0" + this.h;
@@ -47,6 +47,13 @@ function Timer(hours, minutes, seconds){
 				this.h -= 1;
 		};
 
+		// returns true if 5 or less seconds is remaining
+		isFiveSecondRemaining = function(){
+			if(this.h == 0 && this.m ==0 && (this.s > 0 && this.s < 6)){
+				document.getElementById("audio").play();
+			}
+		};
+
 		updateTime = function(){
 			// Update seconds, then minutes, and then hours
 			if(this.s !== 0 || this.m !== 0 || this.h !== 0){
@@ -62,6 +69,7 @@ function Timer(hours, minutes, seconds){
 				if(this.m == 59 & this.s == 59){
 					this.setHours();
 				}
+				this.isFiveSecondRemaining();
 			}
 
 		};
